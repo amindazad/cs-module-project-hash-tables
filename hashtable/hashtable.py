@@ -164,7 +164,13 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        # Get the hash index
+        hash_index = self.hash_index(key)
+        # Delete from the LL and save the result 
+        result = self.table[hash_index].delete(key)
+
+        if result is None:
+            print("Sorry! key not found!")
 
 
     def get(self, key):
@@ -175,7 +181,8 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        # Get the hash index
+        # Save the result 
 
 
     def resize(self, new_capacity):
