@@ -149,7 +149,11 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        #Get the hash_index
+        hash_index = self.hash_index(key)
+
+        #Store it in our list
+        self.table[hash_index].add_to_head(key, value)
 
 
     def delete(self, key):
