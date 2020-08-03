@@ -182,8 +182,14 @@ class HashTable:
         Implement this.
         """
         # Get the hash index
+        hash_index = self.hash_index(key)
         # Save the result 
+        result = self.table[hash_index].find(key)
 
+        if result is None:
+            return None
+
+        return result.value
 
     def resize(self, new_capacity):
         """
