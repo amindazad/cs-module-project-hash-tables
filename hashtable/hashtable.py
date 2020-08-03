@@ -8,7 +8,61 @@ class HashTableEntry:
         self.next = None
 
 
+    def __str__(self):
+        return f'{self.key}, {self.value}'
 # Hash table can't have fewer than this many slots
+
+class HashLinkedList:
+    def __init__(self):
+        self.head = None
+    
+    def find(self, key):
+        current = self.head
+
+        while current is not None:
+            if current.key == key:
+                return current
+            
+            current = current.next
+        
+        return None
+
+    def add_to_head(self, key, value):
+        node = HashTableEntry(key, value)
+
+        if self.head is not None:
+            node.next = self.head
+
+        self.head = node
+
+    def delete(self, key):
+        current = self.head
+
+        # if there is nothing to delete
+        if current is None:
+            return None
+
+        # when deleting head
+        if current.key == key:
+            self.head = current.next
+            return current
+
+        # when deleting something else
+        else:
+            previous = current
+            current = current.next
+
+            while current is not None:
+                if current.key == key: # found it!
+                    previous.next = current.next  # cut current out!
+                    return current # return our deleted node
+
+                else:
+                    previous = current
+                    current = current.next
+            return None # if we got here, nothing was found!
+
+    
 MIN_CAPACITY = 8
 
 
@@ -26,6 +80,10 @@ class HashTable:
         
         self.table = [None] * capacity
         self.capacity = capacity
+
+        for num in range(self.capacity):
+            self.table[num] = HashLinkedList()
+
 
 
     def get_num_slots(self):
@@ -69,8 +127,8 @@ class HashTable:
         hash = 5381
         byte_array = key.encode()
 
-        for byte in byte_array:
-            hash = ((hash * 33) ^ byte) % 0x100000000
+        for char in key:
+            hash = ((hash << 5) + hash) + ord(char)
         
         return hash
 
