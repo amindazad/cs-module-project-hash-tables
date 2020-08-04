@@ -80,6 +80,7 @@ class HashTable:
         
         self.table = [None] * capacity
         self.capacity = capacity
+        self.item_count = 0
 
         for num in range(self.capacity):
             self.table[num] = HashLinkedList()
@@ -149,11 +150,23 @@ class HashTable:
 
         Implement this.
         """
+        # Resize if load factor is above 0.7
+        load_factor = self.get_load_factor()
+        if load_factor > 0.7 :
+            self.resize(self.capacity * 2)
+        
         #Get the hash_index
         hash_index = self.hash_index(key)
 
+        # Check is there is an entry for this key
+        existing_node = self.table[hash_index].find(key)
+
+        if existing_node is not None:
+            existing_node.value = value
+        else:    
         #Store it in our list
-        self.table[hash_index].add_to_head(key, value)
+            self.table[hash_index].add_to_head(key, value)
+            self.item_count += 1
 
 
     def delete(self, key):
@@ -171,6 +184,8 @@ class HashTable:
 
         if result is None:
             print("Sorry! key not found!")
+        else:
+            self.item_count -= 1
 
 
     def get(self, key):
