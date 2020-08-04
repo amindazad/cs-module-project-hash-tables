@@ -198,7 +198,33 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        # Save the old table
+        old_table = self.table
+
+        # Make a new array with new_capacity
+        new_table = [None] * new_capacity
+
+        for num in range(new_capacity):
+            new_table[num] = HashLinkedList()
+
+        # Replace the old table
+        self.table = new_table
+
+        # Update the capacity
+        self.capacity = new_capacity
+
+        # Reset the item_count
+        self.item_count = 0
+
+        # Iterate through the prev array
+        for bucket in old_table:
+            # Get the nodes in each linked list
+            current = bucket.head
+            #Store it in the new array
+            while current is not None:
+                self.put(current.key, current.value)
+
+                current = current.next 
 
 
 
