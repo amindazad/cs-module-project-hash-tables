@@ -1,5 +1,5 @@
-def no_dups(s):
-    # Your code here
+def no_dups(str):
+    return "".join(dict.fromkeys(str))
 
 
 
