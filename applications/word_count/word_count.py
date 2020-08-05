@@ -1,8 +1,13 @@
 def word_count(str):
     counts = dict()
-    words = str.split()
+    to_ignore = '" : ; , . - + = / \ | [ ] { } ( ) * ^ &'
+    lowercase = str.lower()
+    words = lowercase.split()
 
     for word in words:
+        word = word.strip(to_ignore)
+        # If there are no valid chars, skip to the next word
+        if word == '': continue
         if word in counts:
             counts[word] += 1
         else:
